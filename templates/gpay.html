@@ -2,7 +2,14 @@
 <div id="container"></div>
 
 <script>
-  price = '{{price}}';
+  plan = '{{plan}}';
+  price = '';
+  if(plan == 'basic'){
+    price = '15.00';
+  } else if(plan == 'advanced'){
+    price = '29.00';
+  }
+  console.log(plan);
 /**
  * Define the version of the Google Pay API referenced when creating your
  * configuration
@@ -41,10 +48,10 @@ const allowedCardAuthMethods = ["PAN_ONLY", "CRYPTOGRAM_3DS"];
  * @see {@link https://developers.google.com/pay/api/web/reference/request-objects#gateway|PaymentMethodTokenizationSpecification}
  */
 const tokenizationSpecification = {
-  type: 'PAYMENT_GATEWAY',
+  type: 'DIRECT',
   parameters: {
-    'gateway': 'Face Captcha',
-    'gatewayMerchantId': 'BCR2DN4T26JOJARY'
+    "protocolVersion": "ECv2",
+    'publicKey': 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDUm/AGeM4sAXeg9pBo7RHY2r44f1yAdi65I4FrQBd4+ZCcMdk0dGu+0pBrLbgJvDr1DALPTCR9/b1f3KQDMLMiYcdS3ZexQ0Ag3pVPfHGRqneirBasv86t/VvWQtjB8QedG3VDDl4GPs+4PW0+WBEu0iNt2XhjW+j8YAcbbIpL3QIDAQAB'
   }
 };
 
@@ -116,9 +123,8 @@ function getGooglePaymentDataRequest() {
   paymentDataRequest.merchantInfo = {
     // @todo a merchant ID is available for a production environment after approval by Google
     // See {@link https://developers.google.com/pay/api/web/guides/test-and-deploy/integration-checklist|Integration checklist}
-    // merchantId: '12345678901234567890',
-    merchantName: 'Face Captcha',
-    merchantId: 'BCR2DN4T26JOJARY'
+    merchantId: '6125-3871-9070',
+    merchantName: 'Face Captcha'
   };
 
   paymentDataRequest.callbackIntents = ["PAYMENT_AUTHORIZATION"];
@@ -154,20 +160,20 @@ function getGooglePaymentsClient() {
  * @returns Promise<{object}> Promise of PaymentAuthorizationResult object to acknowledge the payment authorization status.
  */
  function getCookie(name) {
-      let cookieValue = null;
-      if (document.cookie && document.cookie !== '') {
-          const cookies = document.cookie.split(';');
-          for (let i = 0; i < cookies.length; i++) {
-              const cookie = cookies[i].trim();
-              // Does this cookie string begin with the name we want?
-              if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                  break;
-              }
-          }
-      }
-      return cookieValue;
-  }
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
 function onPaymentAuthorized(paymentData) {
         return new Promise(function(resolve, reject){
     // handle the response
@@ -177,16 +183,17 @@ function onPaymentAuthorized(paymentData) {
       let headers = new Headers();
       headers.append('X-CSRFToken', csrftoken);
       headers.append("Content-Type", "application/json");
-      fetch(window.location.hostname + "/profile/", {
+      fetch("http//127.0.0.1:8000/profile/", {
         method: "POST",
         body: JSON.stringify({'type': 'buy', 'plan': plan}),
-        headers: headers
+        headers: headers,
+      }).then(()=>{
+        location.href = "http//127.0.0.1:8000/profile/";
       })
-      location.href = window.location.protocol + '//' + window.location.hostname + "/profile/";
       resolve({transactionState: 'SUCCESS'});
     })
     .catch(function() {
-      location.href = window.location.protocol + '//' + window.location.hostname + "/profile/";
+      console.log(1);
       resolve({
         transactionState: 'ERROR',
         error: {
