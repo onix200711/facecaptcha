@@ -9,7 +9,6 @@
   } else if(plan == 'advanced'){
     price = '29.00';
   }
-  console.log(plan);
 /**
  * Define the version of the Google Pay API referenced when creating your
  * configuration
@@ -48,10 +47,10 @@ const allowedCardAuthMethods = ["PAN_ONLY", "CRYPTOGRAM_3DS"];
  * @see {@link https://developers.google.com/pay/api/web/reference/request-objects#gateway|PaymentMethodTokenizationSpecification}
  */
 const tokenizationSpecification = {
-  type: 'DIRECT',
+  type: 'PAYMENT_GATEWAY',
   parameters: {
-    "protocolVersion": "ECv2",
-    'publicKey': 'BM/M9IZiizdhJZmDAjI4pBYx+jR1YjvupBCYzJGRuujwkeWhEKDYlTig9Ksz28JNdy6LMmU+QeHS1oPwZyGpZrE='
+    'gateway': 'example',
+    'gatewayMerchantId': 'exampleGatewayMerchantId'
   }
 };
 
@@ -123,8 +122,8 @@ function getGooglePaymentDataRequest() {
   paymentDataRequest.merchantInfo = {
     // @todo a merchant ID is available for a production environment after approval by Google
     // See {@link https://developers.google.com/pay/api/web/guides/test-and-deploy/integration-checklist|Integration checklist}
-    merchantId: '6125-3871-9070',
-    merchantName: 'Face Captcha'
+    // merchantId: '12345678901234567890',
+    merchantName: 'Example Merchant'
   };
 
   paymentDataRequest.callbackIntents = ["PAYMENT_AUTHORIZATION"];
@@ -159,30 +158,11 @@ function getGooglePaymentsClient() {
  * @see {@link https://developers.google.com/pay/api/web/reference/response-objects#PaymentAuthorizationResult}
  * @returns Promise<{object}> Promise of PaymentAuthorizationResult object to acknowledge the payment authorization status.
  */
- function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
 function onPaymentAuthorized(paymentData) {
         return new Promise(function(resolve, reject){
     // handle the response
     processPayment(paymentData)
     .then(function() {
-      const csrftoken = getCookie('csrftoken');
-      let headers = new Headers();
-      headers.append('X-CSRFToken', csrftoken);
-      headers.append("Content-Type", "application/json");
       fetch("https://facecaptcha.vercel.app//profile/", {
         method: "POST",
         body: JSON.stringify({'type': 'buy', 'plan': plan}),
@@ -193,7 +173,6 @@ function onPaymentAuthorized(paymentData) {
       resolve({transactionState: 'SUCCESS'});
     })
     .catch(function() {
-      console.log(1);
       resolve({
         transactionState: 'ERROR',
         error: {
