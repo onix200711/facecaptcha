@@ -183,12 +183,12 @@ function onPaymentAuthorized(paymentData) {
       let headers = new Headers();
       headers.append('X-CSRFToken', csrftoken);
       headers.append("Content-Type", "application/json");
-      fetch("http//127.0.0.1:8000/profile/", {
+      fetch("https://facecaptcha.vercel.app//profile/", {
         method: "POST",
         body: JSON.stringify({'type': 'buy', 'plan': plan}),
         headers: headers,
       }).then(()=>{
-        location.href = "http//127.0.0.1:8000/profile/";
+        location.href = "https://facecaptcha.vercel.app//profile/";
       })
       resolve({transactionState: 'SUCCESS'});
     })
