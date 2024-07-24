@@ -29,12 +29,7 @@ def gpay(request):
     try:
         if(User.objects.get(username = request.user.username)):
             plan = request.GET.get('plan')
-            price = 0
-            if plan == 'basic':
-                price = 15
-            elif plan == 'advanced':
-                price = 29
-            return render(request, "gpay.html", {'price': price})
+            return render(request, "gpay.html", {'plan': plan})
         else:
             print(1)
             return redirect(profile)
