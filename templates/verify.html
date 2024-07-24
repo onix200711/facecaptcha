@@ -92,7 +92,7 @@
               
               if(code == document.getElementById('floatingInput').value)
               {
-                fetch('https://facecaptcha.vercel.app/mailverification/',{method: "POST", body: JSON.stringify({status:'OK'}), headers: headers}).then((data)=>{window.location.href = 'http://127.0.0.1:8000/'});
+                fetch('https://facecaptcha.vercel.app/mailverification/',{method: "POST", body: JSON.stringify({status:'OK'}), headers: headers}).then((data)=>{window.location.href = 'https://facecaptcha.vercel.app/profile/'});
               }
               else
               {
