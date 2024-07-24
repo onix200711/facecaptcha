@@ -106,7 +106,7 @@ def mailverification(request):
         request.session['maysendcode'] = 0
         return render(request, 'verify.html', {'code':code})
     if request.method == 'POST':
-        userapi = APIkey(username = request.session['email'], apikey = os.urandom(20).hex(), plan = 'starter')
+        userapi = APIkey(username = request.session['email'], apikey = (os.urandom(20).hex())[0:20], plan = 'starter')
         userapi.save()
         user = User.objects.create_user(username = request.session['email'],password = request.session['password'])
         user.save()
