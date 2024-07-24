@@ -1,0 +1,224 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <link rel="stylesheet" id = 'sheet'href="{%static 'main.css'%}">
+    </head>
+    <body>
+      <div id="confirm" class="container-xl bg-info"></div>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top px-4">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="http://127.0.0.1:8000"><img style = "height:20px" src = "data:image/png;base64,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"></a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                </ul>
+              </div>
+            </div>
+        </nav>
+        <br><br>
+        <div id="cont" class = "container-fluid col-xxl-9 my-4 py-3" style="background-color: rgb(254, 241, 241);">
+          <h1 class = 'text-center'>Account info</h1>
+        <table class="table table-borderless mx-auto my-4 fs-4">
+          <tbody>
+            <tr style="background-color: rgb(254, 241, 241) !important;">
+              <th style="background-color: rgb(254, 241, 241) !important;" scope="row">Login</th>
+              <td style="background-color: rgb(254, 241, 241) !important;" >{{username}}</td>
+            </tr>
+            <tr>
+              <th style="background-color: rgb(254, 241, 241) !important;" scope="row">API Key</th>
+              <td style="background-color: rgb(254, 241, 241) !important;">{{apikey}}</td>
+            </tr>
+            <tr>
+              <th style="background-color: rgb(254, 241, 241) !important;" scope="row">Subscription plan</th>
+              <td style="background-color: rgb(254, 241, 241) !important;">{{plan}}</td>
+            </tr>
+            <tr>
+              <th style="background-color: rgb(254, 241, 241) !important;" scope="row">Valid until</th>
+              <td style="background-color: rgb(254, 241, 241) !important;">{{expiration}}</td>
+            </tr>
+            <tr>
+              <th style="background-color: rgb(254, 241, 241) !important;" scope="row">Total requests</th>
+              <td style="background-color: rgb(254, 241, 241) !important;">{{total}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <button class = 'btn btn-warning' id="exit-btn">Exit account</button>
+        <button class = 'btn btn-danger mr-1' id="delete-btn">Delete account</button>
+        </div>
+        <div class="container col-xxl-9" style="left:50%; transform: translate(0%, 0%);">
+        <table class="table table-sm table-striped table-bordered my-4 fs-sm-1">
+          <thead style="background-color: black;" id="table-head">
+          </thead>
+          <tbody class="table-group-divider" id="table-body">
+          </tbody>
+        </table>
+        </div>
+
+            <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 px-3 my-4 border-top">
+                <p class="col-md-4 mb-0 text-body-secondary">© 2024 FaceCaptcha, Inc</p>
+            
+                <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                  <img class="bi me-2" style = "height:20px" src = "data:image/png;base64,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">
+            
+              </footer>
+              <script>
+                var expired = '{{expired}}';
+                var plan = '{{plan}}';
+                console.log(expired);
+                if(expired == 'True' || plan == 'starter'){
+                  const buy = document.createElement('button');
+                  buy.className = 'btn btn-warning position-absolute end-10';
+                  buy.textContent = "Buy Subscription";
+                  buy.addEventListener('click', function() {
+                    window.location.href = window.location.href.substring(0,window.location.href.length - 8) + '/subscriptions/';
+                  })
+                  document.getElementById('cont').appendChild(buy)
+                }
+                var results = '{{results}}';
+                var dates = '{{dates}}';
+                var ults = ''
+                console.log(results.substring(1, 6));
+                // change results to a normal JSON
+                for(let i = 0; i < results.length; i++){
+                  if(results.substring(i, i+5) == "&quot"){
+                    console.log(1);
+                    ults += '"';
+                    i+=5;
+                  } else {
+                    ults += results[i];
+                  }
+                }
+                const res = ults.split('|')
+                const des = dates.split('|')
+                const tableHead = document.getElementById('table-head');
+                const table = document.getElementById('table-body');
+                const tr = document.createElement('tr');
+                tr.style = "background-color: black;";
+                const par = document.createElement('th');
+                par.innerHTML = '#'
+                tr.appendChild(par);
+                for(let key of Object.keys(JSON.parse(res[0]))){
+                  var kas = '';
+                    for(let j = 0; j < key.length; j++){
+                      if(key[j] == '_'){
+                        kas += ' ';
+                      } else {
+                        kas += key[j];
+                      }
+                    }
+                    key = kas;
+                    const th = document.createElement('th');
+                    th.scope = "col";
+                    tr.appendChild(th);
+                    th.innerHTML = key;
+                }
+                tableHead.appendChild(tr);
+                for(let i = 0; i < res.length-1; i++){
+                  obj = JSON.parse(res[i]);
+                  const tr1 = document.createElement('tr');
+                  const par = document.createElement('th');
+                  par.innerHTML = i+1;
+                  tr1.appendChild(par);
+                  for(let [key, value] of Object.entries(obj)){
+                    if(key == 'failure_reason'){
+                      let value_detail = null;
+                      for(let k in value){
+                        if(k == 'detail'){
+                          value_detail = value[k];
+                        }
+                      }
+                      value = value_detail;
+                    } else if(key == 'prediction' || key == 'blur_score' && value != null){
+                      value = value.substring(0, 8);
+                    } else if(key == 'created_at'){
+                      value = value.substring(0, 19);
+                    }
+                    if(value == null){
+                      value = 'null';
+                    }
+                    const td = document.createElement('td');
+                    td.scope = "col";
+                    tr1.appendChild(td);
+                    td.innerHTML = value;
+                  }
+                  table.appendChild(tr1);
+                }
+                function getCookie(name) {
+                    let cookieValue = null;
+                    if (document.cookie && document.cookie !== '') {
+                        const cookies = document.cookie.split(';');
+                        for (let i = 0; i < cookies.length; i++) {
+                            const cookie = cookies[i].trim();
+                            // Does this cookie string begin with the name we want?
+                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+                const csrftoken = getCookie('csrftoken');
+                let headers = new Headers();
+                headers.append('X-CSRFToken', csrftoken);
+                headers.append("Content-Type", "application/json");
+                const exitButton = document.getElementById('exit-btn');
+                const deleteButton = document.getElementById('delete-btn');
+                exitButton.addEventListener('click', function() {
+                  fetch(window.location.protocol + '//' + window.location.hostname + "/profile/", {
+                    method: "POST",
+                    body: JSON.stringify({type: "exit"}),
+                    headers: headers
+                  }).then(() => {
+                    window.location.href = window.location.protocol + '//' + window.location.hostname;
+                  })
+                })
+                deleteButton.addEventListener('click', function() {
+                  const div = document.createElement('div');
+                  const modalOverlay = document.createElement('div');
+                  const dlt = document.createElement('button');
+                  dlt.textContent = 'Delete';
+                  const no = document.createElement('button');
+                  no.textContent = 'No';
+                  no.className = "position-absolute bottom-0 end-0 btn btn-primary btn-lg mx-5 my-4";
+                  dlt.className = "position-absolute bottom-0 start-0 btn btn-danger btn-lg mx-5 my-4";
+                  div.appendChild(dlt);
+                  div.appendChild(no);
+                  div.style = "position: absolute; height:40%; width: 30%;left: 50%; top:50%; transform: translate(-50%, -50%); background-color: rgb(254, 241, 241);"
+                  div.className = "container rounded col-xxl-9";
+                  const text = document.createElement('p');
+                  text.textContent = "Are you sure?";
+                  modalOverlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.2); display: flex; justify-content: center; align-items: center; z-index: 1000;';;
+                  text.style = "position: relative; text-align: center; font-size: 2.4rem";
+                  text.class = "my-4";
+                  div.appendChild(text);
+                  dlt.style = "width: 7rem";
+                  no.style = "width: 7rem";
+                  modalOverlay.appendChild(div);
+                  document.body.appendChild(modalOverlay);
+                  no.addEventListener('click', function(){
+                    document.body.removeChild(modalOverlay);
+                  })
+                  dlt.addEventListener('click', function(){
+                    fetch(window.location.protocol + '//' + window.location.hostname + "profile/", {
+                      method: "POST",
+                      body: JSON.stringify({type: "delete"}),
+                      headers: headers
+                    }).then(() => {
+                      window.location.href = window.location.protocol + '//' + window.location.hostname;
+                    })
+                    document.body.removeChild(modalOverlay);
+                  })
+                })
+              </script>
+        </body>
+    </html>

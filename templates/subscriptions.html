@@ -1,0 +1,72 @@
+{%load static%}
+<head>
+    <link rel="stylesheet" id = 'sheet'href="{%static 'main.css'%}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</head>
+    <body>
+    <div class = 'container col-xxl-10 py-5'>
+        <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+          <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+              <div class="card-header py-3">
+                <h4 class="my-0 fw-normal">Starter</h4>
+              </div>
+              <div class="card-body">
+                <h1 class="card-title pricing-card-title">Free</h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>1 domain protected</li>
+                  <li>Up to 1000 requests/month</li>
+                  <li>Privacy-friendly protection</li>
+                  <li>User-friendly and fully accessible</li>
+                </ul>
+                <button type="button" class="w-100 btn btn-lg btn-outline-primary" id = 'starterPlan'>Get started</button>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+              <div class="card-header py-3">
+                <h4 class="my-0 fw-normal">Basic</h4>
+              </div>
+              <div class="card-body">
+                <h1 class="card-title pricing-card-title">$15<small class="text-body-secondary fw-light">/mo</small></h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>Up to 5 protected domains</li>
+                  <li>Up to 5,000 requests / month</li>
+                  <li>Usage statistics</li>
+                  <li>Help center access</li>
+                </ul>
+                <button type="button" class="w-100 btn btn-lg btn-primary" id = 'basicPlan'>Contact us</button>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm border-primary">
+              <div class="card-header py-3 text-bg-primary border-primary">
+                <h4 class="my-0 fw-normal">Advanced</h4>
+              </div>
+              <div class="card-body">
+                <h1 class="card-title pricing-card-title">$29<small class="text-body-secondary fw-light">/mo</small></h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>Up to 15 protected domains</li>
+                  <li>Up to 20,000 requests / month</li>
+                  <li>Usage statistics</li>
+                  <li>Help Center and Online support</li>
+                </ul>
+                <button type="button" class="w-100 btn btn-lg btn-primary" id = 'advancedPlan'>Contact us</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script>
+            const starter = document.getElementById('starterPlan');
+            const basic = document.getElementById('basicPlan');
+            const advanced = document.getElementById('advancedPlan');
+            basic.addEventListener('click', function() {
+                location.href = window.location.protocol + '//' + window.location.hostname + "/gpay?plan=basic";
+            })
+            advanced.addEventListener('click', function() {
+                location.href = window.location.protocol + '//' + window.location.hostname + "/gpay?plan=advanced";
+            })
+        </script>
+</body>
