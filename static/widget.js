@@ -76,94 +76,24 @@ document.addEventListener("DOMContentLoaded", function() {
         modalContent.appendChild(closeButton);
         
         canvas.style = "position: absolute, display: none; visibility: hidden;";
-        video.style = "position: absolute;width: 100%;height: 80%;max-width: 100%;max-height:80%;min-width: 100%;min-height:80%;object-fit: cover;left:0; transform: scaleX(-1) ;"
-         if (navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(function (stream) {
-            timeOut.textContent = 3;
-            setTimeout(function(){
-                timeOut.textContent = 2;
-                setTimeout(function(){
-                    timeOut.textContent = 1;
-                    setTimeout(function(){
-                        timeOut.textContent = 0;
-                    }, 1000)
-                }, 1000)
-            }, 1000)
-            video.srcObject = stream;
-            setTimeout(function(){
-                const context = canvas.getContext("2d");
-                const width = video.videoWidth;
-                const height = video.videoHeight;
-                canvas.width = width;
-                canvas.height = height;
-                context.drawImage(video, 0, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
-                const data = canvas.toDataURL("image/png");
-                function getCookie(name) {
-                    let cookieValue = null;
-                    if (document.cookie && document.cookie !== '') {
-                        const cookies = document.cookie.split(';');
-                        for (let i = 0; i < cookies.length; i++) {
-                            const cookie = cookies[i].trim();
-                            // Does this cookie string begin with the name we want?
-                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                                break;
-                            }
-                        }
-                    }
-                    return cookieValue;
-                }
-                const csrftoken = getCookie('csrftoken');
-                let headers = new Headers();
-                headers.append('X-CSRFToken', csrftoken);
-                headers.append("Content-Type", "application/json");
-                if(showOverlay == true){
-                    modalContent.innerHTML = '';
-                    modalContent.appendChild(closeButton);
-                    const loading = document.createElement('img');
-                    loading.src = "https://global.discourse-cdn.com/sitepoint/original/3X/e/3/e352b26bbfa8b233050087d6cb32667da3ff809c.gif";
-                    loading.style = "position:absolute; left:50%; top:50%; transform:translate(-50%, -50%);width:50px; height:50px";
-                    modalContent.appendChild(loading);
-                    stream.getTracks().forEach(function(track) {
-                        track.stop();
-                      });
-                      console.log(Date.now());
-                fetch('https://facecaptcha.vercel.app/add/',{
-                    method: "POST",
-                    body: JSON.stringify({image:data.substring(22, data.length), apikey: apiKey}),
-                    headers: headers,
-                })
-                .then((response) => response.json())
-                  .then((data) => {
-                    console.log(data);
-                    console.log(Date.now());
-                    result = data;
-                    if(data.result == true){
-                        document.body.removeChild(modalOverlay);
-                        checkbox.src = "https://www.svgrepo.com/show/309414/checkbox-checked.svg"
-                        console.log(video.srcObject);
-                        checkbox.removeEventListener('change', null);
-                        checkboxState = "close";
-                    } else {
-                        
-                        showOverlay = false;
-                        document.body.removeChild(modalOverlay);
-                        checkbox.src = 'https://static.thenounproject.com/png/1921206-200.png';
-                    }
-                    window.dispatchEvent(event);
-                    console.log(data);
-                  });
-                } else {
-                    stream.getTracks().forEach(function(track) {
-                        track.stop();
-                      });
-                }
-            }, 4000)
+        const flow = document.createElement('div');
+        flow.id = 'flow-widget';
+        modalContent.appendChild(flow);
+        fetch('https://kyc.biometric.kz/api/v1/flows/session/create/', {
+            method: 'POST',
+            body: JSON.stringify({
+                api_key: 'MsOwsj-RFVWfXuEBtG3VZLM26ZXs_8mCfOU7uVaZVUov4-Q'
             })
-            .catch(function () {
-            console.log("Something went wrong!");
-            });
+        })
+        .then(response => response.json())
+        .then(data => {
+            const { session_id, technologies } = data
+            FlowWidget.startSession({
+                id: session_id,
+                selector: '#flow-widget',
+                locale: 'ru'
+            })
+        })
         }
         // Set styles for modal overlay
         modalOverlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 1000;';
