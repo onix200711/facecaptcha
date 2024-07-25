@@ -25,25 +25,29 @@ def liveness():
 def addItem(request):
     i = request.data
     print(i['apikey'])
+    try:
         keyobj = APIkey.objects.get(apikey=i['apikey'])
-    if keyobj != None:
-        deletion_time = datetime.now(timezone.utc) - keyobj.creation_date
-        print(deletion_time)
-        if(keyobj.transactions_left > -1 or deletion_time.days <= 30):
-            file_content = base64.b64decode(i['image'])
-            with open("image.png", "wb") as f:
-                f.write(file_content)
-            x = liveness()
-            trans = Transaction(username=keyobj.username, result=x)
-            trans.save()
-            print(x)
-            keyobj.transactions_left -= 1
-            keyobj.save()
-            return Response(x)
-        else:
-            keyobj.expired = True
-            keyobj.save()
-            return Response('Your Subscription has expired')
+        if keyobj != None:
+            deletion_time = datetime.now(timezone.utc) - keyobj.creation_date
+            print(deletion_time)
+            if(keyobj.transactions_left > -1 or deletion_time.days <= 30):
+                file_content = base64.b64decode(i['image'])
+                with open("image.png", "wb") as f:
+                    f.write(file_content)
+                x = liveness()
+                trans = Transaction(username=keyobj.username, result=x)
+                trans.save()
+                print(x)
+                keyobj.transactions_left -= 1
+                keyobj.save()
+                return Response(x)
+            else:
+                keyobj.expired = True
+                keyobj.save()
+                return Response('Your Subscription has expired')
+    except:
+        print('API key error')
+        return Response('Wrong API key')
     #serializer = ItemSerializer(data=request.data)
     #if serializer.is_valid():
     #    serializer.save()
