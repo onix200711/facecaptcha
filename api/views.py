@@ -4,18 +4,16 @@ from base.models import APIkey, Transaction
 from datetime import datetime, timezone
 import requests
 import base64
-def liveness(file_content):
+import io
+def liveness(content):
+    file = io.BytesIO(content)
     url = 'https://kyc.biometric.kz/api/v1/backend/liveness/short/'
     headers = {
         'accept': 'application/json',
     }
-    s = BytesIO()
-    s.write(file_content)
-    s.seek(0)
     files = {
-        'image': ('image.png', s.getvalue(), 'image/png'),
+        'image': ('image.png', file, 'image/png'),
     }
-    s.close()
     data = {
         'api_key': 'W-EFrw51p8ftC2wAbCvGISnocqI_LR60Qntm3ilkMC2XCic',
     }
