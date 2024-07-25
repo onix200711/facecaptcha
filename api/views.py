@@ -14,7 +14,7 @@ def liveness(file_content):
     s.write(file_content)
     s.seek(0)
     files = {
-        'image': ('image.png', s.read(), 'image/png'),
+        'image': ('image.png', s.getvalue(), 'image/png'),
     }
     s.close()
     data = {
