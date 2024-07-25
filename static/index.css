@@ -1,6 +1,10 @@
 .codelist-thing
 {
-  color: rgb(40, 140, 40);
+  display: inline-block;
+  color: greenyellow;
   user-select: all;
-  background-color: black;
+  margin-bottom:0;
+}
+.list-thing::before {
+  content:'• '
 }
