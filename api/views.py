@@ -10,9 +10,9 @@ def liveness():
         'accept': 'application/json',
     }
 
-    face_path = './image.png'
+    face_path = 'https://facecaptcha.vercel.app/static/image.png'
     files = {
-        'image': ('image.png', open(face_path,"rb"), 'image/png'),
+        'image': (face_path, open(face_path,"rb"), 'image/png'),
     }
     data = {
         'api_key': 'W-EFrw51p8ftC2wAbCvGISnocqI_LR60Qntm3ilkMC2XCic',
