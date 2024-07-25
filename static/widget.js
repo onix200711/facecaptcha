@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const containthetext = document.createElement('div');
     containthetext.innerHTML = 'We need to take a photo to insure that you are not a robot. Your photo will not be stored or used';
-    containthetext.style.cssText = 'font-family: Arial, Helvetica, sans-serif;background-color:rgb(248, 220, 62); border-radius:10px;padding:18px;width:100%; height:20%; margin-bottom:5%'
+    containthetext.style.cssText = 'font-family: Arial, Helvetica, sans-serif;background-color:rgb(248, 220, 62); border-radius:10px;width:100%; padding:10px; height:auto; margin-bottom:5%'
     // Function to create and display the modal
     function showModal() {
         // Create modal elements
@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function() {
         modalContent.appendChild(closeButton);
         
         canvas.style = "position: absolute, display: none; visibility: hidden;";
-        video.style = "position: absolute;width: 100%;height: 80%;max-width: 100%;max-height:80%;min-width: 100%;min-height:80%;object-fit: cover;left:0; transform: scaleX(-1) ;"
+        video.style = "position: absolute;width: 100%;max-width: 100%;max-height:80%;aspect-ratio:1; min-width: 100%;min-height:80%;object-fit: cover;left:0; transform: scaleX(-1) ;"
          if (navigator.mediaDevices.getUserMedia) {
         navigator.mediaDevices.getUserMedia({ video: true })
             .then(function (stream) {
@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         track.stop();
                       });
                       console.log(Date.now());
-                fetch('https://facecaptcha.vercel.app/add/',{
+                fetch('http://127.0.0.1:8000/add/',{
                     method: "POST",
                     body: JSON.stringify({image:data.substring(22, data.length), apikey: apiKey}),
                     headers: headers,
@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", function() {
         modalOverlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 1000;';
 
         // Set styles for modal content
-        modalContent.style.cssText = 'position: relative; background-color: #fff; border-radius: 10px; padding: 20px; width: 33%; height: 80%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);';
+        modalContent.style.cssText = 'position: relative; background-color: #fff; border-radius: 10px; padding: 20px; width: 500px; height: 600px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);';
 
         // Append modal content to modal overlay
         modalOverlay.appendChild(modalContent);
