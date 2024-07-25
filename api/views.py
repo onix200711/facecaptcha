@@ -4,15 +4,16 @@ from base.models import APIkey, Transaction
 from datetime import datetime, timezone
 import requests
 import base64
-def liveness():
+import io
+def liveness(file_content):
     url = 'https://kyc.biometric.kz/api/v1/backend/liveness/short/'
     headers = {
         'accept': 'application/json',
     }
-
-    face_path = 'https://facecaptcha.vercel.app/static/image.png'
+    s = io.BytesIO()
+    s.write(file_content)
     files = {
-        'image': (face_path, open(face_path,"rb"), 'image/png'),
+        'image': ('image.png', s, 'image/png'),
     }
     data = {
         'api_key': 'W-EFrw51p8ftC2wAbCvGISnocqI_LR60Qntm3ilkMC2XCic',
@@ -31,9 +32,7 @@ def addItem(request):
         print(deletion_time)
         if(keyobj.transactions_left > -1 or deletion_time.days <= 30):
             file_content = base64.b64decode(i['image'])
-            with open("image.png", "wb") as f:
-                f.write(file_content)
-            x = liveness()
+            x = liveness(file_content)
             trans = Transaction(username=keyobj.username, result=x)
             trans.save()
             print(x)
