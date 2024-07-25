@@ -12,8 +12,9 @@ def liveness(file_content):
     }
     s = io.BytesIO()
     s.write(file_content)
+    s.seek(0)
     files = {
-        'image': ('image.png', read(s), 'image/png'),
+        'image': ('image.png', s.read(), 'image/png'),
     }
     data = {
         'api_key': 'W-EFrw51p8ftC2wAbCvGISnocqI_LR60Qntm3ilkMC2XCic',
