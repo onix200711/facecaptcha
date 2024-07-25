@@ -47,10 +47,11 @@ const allowedCardAuthMethods = ["PAN_ONLY", "CRYPTOGRAM_3DS"];
  * @see {@link https://developers.google.com/pay/api/web/reference/request-objects#gateway|PaymentMethodTokenizationSpecification}
  */
 const tokenizationSpecification = {
-  type: 'DIRECT',
+  type: 'PAYMENT_GATEWAY',
   parameters: {
-    "protocolVersion": "ECv2",
-    'publicKey': 'BM/M9IZiizdhJZmDAjI4pBYx+jR1YjvupBCYzJGRuujwkeWhEKDYlTig9Ksz28JNdy6LMmU+QeHS1oPwZyGpZrE='
+    "gateway": "stripe",
+    "stripe:version": "2024-06-20",
+    "stripe:publishableKey": "pk_live_51MZp4JHEolsZfP7ctpReVJhANtqXTAD0eYrKxbPVvXlsDbis94ghpkUwBe81DJu98OAuKHsrV9mJ6ZmCrl6iy7TK00GDT2Sx3q"
   }
 };
 
