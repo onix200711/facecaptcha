@@ -30,7 +30,7 @@ EMAIL_HOST_PASSWORD = 'kuyyvdunerkkdcqw'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-ALLOWED_HOSTS = ['.vercel.app', '.now.sh']
+ALLOWED_HOSTS = ['.me']
 
 
 # Application definition
@@ -106,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-CORS_ALLOWED_ORIGINS = ['https://facecaptcha.vercel.app/', 'http://127.0.0.1:5500/gpt.html']
+CORS_ORIGIN_ALLOW_ALL = True
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
