@@ -106,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:5500']
+CORS_ALLOWED_ORIGINS = ['https://facecaptcha.vercel.app/']
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
