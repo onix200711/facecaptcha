@@ -161,9 +161,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             }, 4000)
             })
-            .catch(function () {
-            console.log("Something went wrong!");
-            });
         }
         // Set styles for modal overlay
         modalOverlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 1000;';
