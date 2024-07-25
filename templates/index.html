@@ -167,23 +167,29 @@
               </div>
           
               <div class="row align-items-md-stretch">
-                <div class="col-md-6">
-                  <div class="h-100 py-4 px-5 text-bg-dark rounded-3">
-                    <h2 class = "pb-2">Quick and Simple Setup</h2>
-                    <p class = "codelist-thing">&lt;div data-api-key='&lt;your-apikey&gt;' id="facecaptcha-widget"&gt;&lt;/div&gt;</p>
-                    <p class = "codelist-thing">&lt;script type="module" src="widget.js"&gt;&lt;/script&gt;</p>
-                  </div>
-                </div>
                 <div class="col-md-6 text-dark">
                   <div class="h-100 py-4 px-5 bg-primary border rounded-3">
-                    <h2 class = "pb-2">Compatibility with Existing Solutions</h2>
-                    <p class = "list-thing">Seamless Transition: Our API is designed to work alongside other CAPTCHA solutions, making it easy to switch or integrate multiple systems.</p>
-                    <p class = "list-thing">Flexibility: Whether you’re using reCAPTCHA, hCaptcha, or any other solution, our API can be integrated without major changes to your existing setup.</p>
+                    <h2 class = "pb-2">Integrate in few steps</h2>
+                    <p class = "list-thing">Register on this site</p>
+                    <p class = "list-thing">Get your API Key</p>
+                    <p class = "list-thing">Copy and paste code with your API key</p>
                   </div>
                 </div>
+                <div class="col-md-6">
+                  <div class="h-100 py-4 px-5 text-bg-dark rounded-3" >
+                    <h2 class = "pb-2">Code</h2>
+                    <div style = 'background-color: #1d1d1d;; padding:5px; border-radius: 4px; border:rgb(85, 85, 85) 1px solid'>
+                    <p class = "codelist-thing">&lt;div data-api-key='&lt;your-apikey&gt;' id="facecaptcha-widget"&gt;&lt;/div&gt;</p>
+                    <p class = "codelist-thing">&lt;script&gt;<br/>import {result} from "https://facecaptcha.vercel.app/static/widget.js";<br/>window.addEventListener("captcha-end", function(){<br />// Capturing the captcha's end<br />})&lt;/script&gt;</p>
+                    <p class = "codelist-thing">&lt;script type="module" src="https://facecaptcha.vercel.app/static/widget.js"&gt;&lt;/script&gt;</p>
+                    </div>
+                  </div>
+                </div>
+                
               </div>
             </div>
           </div>
+          
           
         <!-- _______________________________CONTAINER5_______________________________ -->
         <div class = 'container col-xxl-10 py-5'>
