@@ -4,7 +4,6 @@ from base.models import APIkey, Transaction
 from datetime import datetime, timezone
 import requests
 import base64
-import BytesIO
 def liveness(file_content):
     url = 'https://kyc.biometric.kz/api/v1/backend/liveness/short/'
     headers = {
