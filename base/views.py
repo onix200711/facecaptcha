@@ -1,3 +1,4 @@
+from rest_framework.response import Response
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
@@ -29,38 +30,30 @@ def index(request):
 def sub(request):
     stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
     if request.method == "POST":
+        x = json.loads(request.body)
+        plan = x['plan']
+        price = ''
+        if plan == 'basic':
+             price = 'price_1PgjlsRu4mKtTRNvutg9RJ7P'
+        elif plan == 'advanced':
+             price = 'price_1Pgkm8Ru4mKtTRNvGM61wriE'
+        print(plan)
         checkout_session = stripe.checkout.Session.create(
 			payment_method_types = ['card'],
 			line_items = [
 				{
-					'price': 'price_1PgjcnRu4mKtTRNvukRxKtSI',
+					'price': price,
 					'quantity': 1,
 				},
 			],
 			mode = 'payment',
 			customer_creation = 'always',
-			success_url = 'http://facecaptcha.me/payment_successful?session_id={CHECKOUT_SESSION_ID}',
-			cancel_url = 'http://facecaptcha.me/payment_canceled',
+			success_url = 'http://facecaptcha.me/profile?session_id={CHECKOUT_SESSION_ID}',
+			cancel_url = 'http://facecaptcha.me/',
 		)
-        return redirect(checkout_session.url, code=303)
+        print(checkout_session.url)
+        return JsonResponse({'link': checkout_session.url})
     return render(request, "subscriptions.html")
-
-
-## use Stripe dummy card: 4242 4242 4242 4242
-def payment_successful(request):
-	stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
-	checkout_session_id = request.GET.get('session_id', None)
-	session = stripe.checkout.Session.retrieve(checkout_session_id)
-	customer = stripe.Customer.retrieve(session.customer)
-	user_id = request.user.user_id
-	return render(request, 'payment_successful.html', {'customer': customer})
-
-
-def payment_canceled(request):
-	stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
-	return render(request, 'payment_canceled.html')
-
-
 @csrf_exempt
 def stripe_webhook(request):
 	stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
@@ -98,6 +91,11 @@ def profile(request):
     user = APIkey.objects.get(username = request.user.username)
     real_user = User.objects.get(username = request.user.username)
     transactions = Transaction.objects.filter(username = request.user.username)
+    stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+    checkout_session_id = request.GET.get('session_id', None)
+    session = stripe.checkout.Session.retrieve(checkout_session_id)
+    customer = stripe.Customer.retrieve(session.customer)
+    user_id = request.user.user_id
     if request.method == "POST":
         print(request.body)
         data = json.loads(request.body)
