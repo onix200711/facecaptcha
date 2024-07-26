@@ -96,11 +96,11 @@ def profile(request):
     if checkout_session_id != None:
         stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
         session = stripe.checkout.Session.retrieve(checkout_session_id)
-        if session.custom_fields == 'basic':
+        if session.custom_fields == ['basic']:
             user.transactions_left = 5000
             user.plan = 'basic'
             user.save()
-        elif session.custom_fields == 'advanced':
+        elif session.custom_fields == ['advanced']:
             user.transactions_left = 20000
             user.plan = 'advanced'
             user.save()
