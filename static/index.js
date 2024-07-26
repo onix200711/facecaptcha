@@ -27,7 +27,7 @@ headers.append("Content-Type", "application/json");
         headers: headers,
     credentials: 'include'
     }) */ 
-    window.location.href = 'https://facecaptcha.vercel.app/signup/';
+    window.location.href = 'https://facecaptcha.me/signup/';
   }
   function f1(){window.scrollTo(0, 0);};
   function f2(){window.scrollTo(0, 700);};
