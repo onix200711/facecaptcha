@@ -63,7 +63,7 @@
             const basic = document.getElementById('basicPlan');
             const advanced = document.getElementById('advancedPlan');
             basic.addEventListener('click', function() {
-                fetch("http://facecaptcha.me/subscriptions/", {
+                fetch("https://facecaptcha.me/subscriptions/", {
                   method: "POST",
                   body: JSON.stringify({'plan': 'basic'}),
                 })
@@ -76,7 +76,7 @@
                 });
             })
             advanced.addEventListener('click', function() {
-              fetch("http://facecaptcha.me/subscriptions/", {
+              fetch("https://facecaptcha.me/subscriptions/", {
                   method: "POST",
                   body: JSON.stringify({'plan': 'advanced'}),
                 })
