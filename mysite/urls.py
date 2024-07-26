@@ -20,8 +20,6 @@ import base.views as siteviews
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
-    path('payment_successful', siteviews.payment_successful, name='payment_successful'),
-    path('payment_canceled', siteviews.payment_canceled, name='payment_canceled'),
     path('stripe_webhook', siteviews.stripe_webhook, name='stripe_webhook'),
     path('admin/', admin.site.urls),
     path('',siteviews.index),
