@@ -106,7 +106,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOWED_ORIGINS = [
+    "http://facecaptcha.me",
+]
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
