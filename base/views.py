@@ -37,7 +37,6 @@ def sub(request):
              price = 'price_1PgjlsRu4mKtTRNvutg9RJ7P'
         elif plan == 'advanced':
              price = 'price_1Pgkm8Ru4mKtTRNvGM61wriE'
-        print(plan)
         checkout_session = stripe.checkout.Session.create(
 			payment_method_types = ['card'],
 			line_items = [
@@ -48,6 +47,7 @@ def sub(request):
 			],
 			mode = 'payment',
 			customer_creation = 'always',
+			custom_fields = [plan],
 			success_url = 'http://facecaptcha.me/profile?session_id={CHECKOUT_SESSION_ID}',
 			cancel_url = 'http://facecaptcha.me/',
 		)
