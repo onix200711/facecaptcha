@@ -174,7 +174,7 @@
                 const exitButton = document.getElementById('exit-btn');
                 const deleteButton = document.getElementById('delete-btn');
                 exitButton.addEventListener('click', function() {
-                  fetch(window.location.protocol + '//' + window.location.hostname + "/profile/", {
+                  fetch("https://www.facecaptcha.me/profile/", {
                     method: "POST",
                     body: JSON.stringify({type: "exit"}),
                     headers: headers
@@ -209,7 +209,7 @@
                     document.body.removeChild(modalOverlay);
                   })
                   dlt.addEventListener('click', function(){
-                    fetch(window.location.protocol + '//' + window.location.hostname + "profile/", {
+                    fetch("https://www.facecaptcha.me/profile/", {
                       method: "POST",
                       body: JSON.stringify({type: "delete"}),
                       headers: headers
