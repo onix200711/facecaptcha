@@ -104,7 +104,7 @@ def profile(request):
             user.transactions_left = 5000
             user.plan = 'basic'
             user.save()
-        elif session.custom_fields['plan'] == ['advanced']:
+        elif session.custom_fields['plan'] == 'advanced':
             user.transactions_left = 20000
             user.plan = 'advanced'
             user.save()
