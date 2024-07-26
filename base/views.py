@@ -47,6 +47,7 @@ def sub(request):
 			],
 			mode = 'payment',
 			customer_creation = 'always',
+			metadata = {'plan': plan},
 			success_url = 'http://facecaptcha.me/profile?session_id={CHECKOUT_SESSION_ID}',
 			cancel_url = 'http://facecaptcha.me/',
 		)
@@ -95,11 +96,11 @@ def profile(request):
     if checkout_session_id != None:
         stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
         session = stripe.checkout.Session.retrieve(checkout_session_id)
-        if session.custom_fields['plan'] == 'basic':
+        if session.metadata['plan'] == 'basic':
             user.transactions_left = 5000
             user.plan = 'basic'
             user.save()
-        elif session.custom_fields['plan'] == 'advanced':
+        elif session.metadata['plan'] == 'advanced':
             user.transactions_left = 20000
             user.plan = 'advanced'
             user.save()
