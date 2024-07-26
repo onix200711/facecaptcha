@@ -71,6 +71,73 @@
             
               </footer>
               <script>
+                function getCookie(name) {
+                    let cookieValue = null;
+                    if (document.cookie && document.cookie !== '') {
+                        const cookies = document.cookie.split(';');
+                        for (let i = 0; i < cookies.length; i++) {
+                            const cookie = cookies[i].trim();
+                            // Does this cookie string begin with the name we want?
+                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+                const csrftoken = getCookie('csrftoken');
+                let headers = new Headers();
+                headers.append('X-CSRFToken', csrftoken);
+                headers.append("Content-Type", "application/json");
+                const exitButton = document.getElementById('exit-btn');
+                const deleteButton = document.getElementById('delete-btn');
+                exitButton.addEventListener('click', function() {
+                  fetch("https://www.facecaptcha.me/profile/", {
+                    method: "POST",
+                    body: JSON.stringify({'type': "exit"}),
+                    headers: headers
+                  }).then(() => {
+                    window.location.href = window.location.protocol + '//' + window.location.hostname;
+                  })
+                })
+                deleteButton.addEventListener('click', function() {
+                  const div = document.createElement('div');
+                  const modalOverlay = document.createElement('div');
+                  const dlt = document.createElement('button');
+                  dlt.textContent = 'Delete';
+                  const no = document.createElement('button');
+                  no.textContent = 'No';
+                  no.className = "position-absolute bottom-0 end-0 btn btn-primary btn-lg mx-5 my-4";
+                  dlt.className = "position-absolute bottom-0 start-0 btn btn-danger btn-lg mx-5 my-4";
+                  div.appendChild(dlt);
+                  div.appendChild(no);
+                  div.style = "position: absolute; height:40%; width: 30%;left: 50%; top:50%; transform: translate(-50%, -50%); background-color: rgb(254, 241, 241);"
+                  div.className = "container rounded col-xxl-9";
+                  const text = document.createElement('p');
+                  text.textContent = "Are you sure?";
+                  modalOverlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.2); display: flex; justify-content: center; align-items: center; z-index: 1000;';;
+                  text.style = "position: relative; text-align: center; font-size: 2.4rem";
+                  text.class = "my-4";
+                  div.appendChild(text);
+                  dlt.style = "width: 7rem";
+                  no.style = "width: 7rem";
+                  modalOverlay.appendChild(div);
+                  document.body.appendChild(modalOverlay);
+                  no.addEventListener('click', function(){
+                    document.body.removeChild(modalOverlay);
+                  })
+                  dlt.addEventListener('click', function(){
+                    fetch("https://www.facecaptcha.me/profile/", {
+                      method: "POST",
+                      body: JSON.stringify({'type': "delete"}),
+                      headers: headers
+                    }).then(() => {
+                      window.location.href = window.location.protocol + '//' + window.location.hostname;
+                    })
+                    document.body.removeChild(modalOverlay);
+                  })
+                })
                 var expired = '{{expired}}';
                 var plan = '{{plan}}';
                 console.log(expired);
@@ -152,73 +219,6 @@
                   }
                   table.appendChild(tr1);
                 }
-                function getCookie(name) {
-                    let cookieValue = null;
-                    if (document.cookie && document.cookie !== '') {
-                        const cookies = document.cookie.split(';');
-                        for (let i = 0; i < cookies.length; i++) {
-                            const cookie = cookies[i].trim();
-                            // Does this cookie string begin with the name we want?
-                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                                break;
-                            }
-                        }
-                    }
-                    return cookieValue;
-                }
-                const csrftoken = getCookie('csrftoken');
-                let headers = new Headers();
-                headers.append('X-CSRFToken', csrftoken);
-                headers.append("Content-Type", "application/json");
-                const exitButton = document.getElementById('exit-btn');
-                const deleteButton = document.getElementById('delete-btn');
-                exitButton.addEventListener('click', function() {
-                  fetch("https://www.facecaptcha.me/profile/", {
-                    method: "POST",
-                    body: JSON.stringify({'type': "exit"}),
-                    headers: headers
-                  }).then(() => {
-                    window.location.href = window.location.protocol + '//' + window.location.hostname;
-                  })
-                })
-                deleteButton.addEventListener('click', function() {
-                  const div = document.createElement('div');
-                  const modalOverlay = document.createElement('div');
-                  const dlt = document.createElement('button');
-                  dlt.textContent = 'Delete';
-                  const no = document.createElement('button');
-                  no.textContent = 'No';
-                  no.className = "position-absolute bottom-0 end-0 btn btn-primary btn-lg mx-5 my-4";
-                  dlt.className = "position-absolute bottom-0 start-0 btn btn-danger btn-lg mx-5 my-4";
-                  div.appendChild(dlt);
-                  div.appendChild(no);
-                  div.style = "position: absolute; height:40%; width: 30%;left: 50%; top:50%; transform: translate(-50%, -50%); background-color: rgb(254, 241, 241);"
-                  div.className = "container rounded col-xxl-9";
-                  const text = document.createElement('p');
-                  text.textContent = "Are you sure?";
-                  modalOverlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.2); display: flex; justify-content: center; align-items: center; z-index: 1000;';;
-                  text.style = "position: relative; text-align: center; font-size: 2.4rem";
-                  text.class = "my-4";
-                  div.appendChild(text);
-                  dlt.style = "width: 7rem";
-                  no.style = "width: 7rem";
-                  modalOverlay.appendChild(div);
-                  document.body.appendChild(modalOverlay);
-                  no.addEventListener('click', function(){
-                    document.body.removeChild(modalOverlay);
-                  })
-                  dlt.addEventListener('click', function(){
-                    fetch("https://www.facecaptcha.me/profile/", {
-                      method: "POST",
-                      body: JSON.stringify({'type': "delete"}),
-                      headers: headers
-                    }).then(() => {
-                      window.location.href = window.location.protocol + '//' + window.location.hostname;
-                    })
-                    document.body.removeChild(modalOverlay);
-                  })
-                })
               </script>
         </body>
     </html>
