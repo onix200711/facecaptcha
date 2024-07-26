@@ -20,7 +20,7 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                   <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="https://facecaptcha.vercel.app/">Home</a>
+                    <a class="nav-link" aria-current="page" href="https://facecaptcha.me/">Home</a>
                   </li>
                 </ul>
                 <form class="d-flex" role="search">
@@ -92,7 +92,7 @@
               
               if(code == document.getElementById('floatingInput').value)
               {
-                fetch('https://facecaptcha.vercel.app/mailverification/',{method: "POST", body: JSON.stringify({status:'OK'}), headers: headers}).then((data)=>{window.location.href = 'https://facecaptcha.vercel.app/profile/'});
+                fetch('https://facecaptcha.me/mailverification/',{method: "POST", body: JSON.stringify({status:'OK'}), headers: headers}).then((data)=>{window.location.href = 'https://facecaptcha.me/profile/'});
               }
               else
               {
