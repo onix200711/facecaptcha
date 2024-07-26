@@ -153,43 +153,44 @@
                 var results = '{{results}}';
                 var dates = '{{dates}}';
                 var ults = ''
-                console.log(results.substring(1, 6));
-                // change results to a normal JSON
-                for(let i = 0; i < results.length; i++){
-                  if(results.substring(i, i+5) == "&quot"){
-                    console.log(1);
-                    ults += '"';
-                    i+=5;
-                  } else {
-                    ults += results[i];
-                  }
-                }
-                const res = ults.split('|')
-                const des = dates.split('|')
-                const tableHead = document.getElementById('table-head');
-                const table = document.getElementById('table-body');
-                const tr = document.createElement('tr');
-                tr.style = "background-color: black;";
-                const par = document.createElement('th');
-                par.innerHTML = '#'
-                tr.appendChild(par);
-                for(let key of Object.keys(JSON.parse(res[0]))){
-                  var kas = '';
-                    for(let j = 0; j < key.length; j++){
-                      if(key[j] == '_'){
-                        kas += ' ';
-                      } else {
-                        kas += key[j];
-                      }
+                if(results != ''){
+                  console.log(results.substring(1, 6));
+                  // change results to a normal JSON
+                  for(let i = 0; i < results.length; i++){
+                    if(results.substring(i, i+5) == "&quot"){
+                      console.log(1);
+                      ults += '"';
+                      i+=5;
+                    } else {
+                      ults += results[i];
                     }
-                    key = kas;
-                    const th = document.createElement('th');
-                    th.scope = "col";
-                    tr.appendChild(th);
-                    th.innerHTML = key;
-                }
-                tableHead.appendChild(tr);
-                for(let i = 0; i < res.length-1; i++){
+                  }
+                  const res = ults.split('|')
+                  const des = dates.split('|')
+                  const tableHead = document.getElementById('table-head');
+                  const table = document.getElementById('table-body');
+                  const tr = document.createElement('tr');
+                  tr.style = "background-color: black;";
+                  const par = document.createElement('th');
+                  par.innerHTML = '#'
+                  tr.appendChild(par);
+                  for(let key of Object.keys(JSON.parse(res[0]))){
+                    var kas = '';
+                      for(let j = 0; j < key.length; j++){
+                        if(key[j] == '_'){
+                          kas += ' ';
+                        } else {
+                          kas += key[j];
+                        }
+                      }
+                      key = kas;
+                      const th = document.createElement('th');
+                      th.scope = "col";
+                      tr.appendChild(th);
+                      th.innerHTML = key;
+                  }
+                  tableHead.appendChild(tr);
+                  for(let i = 0; i < res.length-1; i++){
                   obj = JSON.parse(res[i]);
                   const tr1 = document.createElement('tr');
                   const par = document.createElement('th');
@@ -218,6 +219,7 @@
                     td.innerHTML = value;
                   }
                   table.appendChild(tr1);
+                }
                 }
               </script>
         </body>
