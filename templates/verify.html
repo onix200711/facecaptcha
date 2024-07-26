@@ -92,7 +92,7 @@
               
               if(code == document.getElementById('floatingInput').value)
               {
-                fetch('https://facecaptcha.me/mailverification/',{method: "POST", body: JSON.stringify({status:'OK'}), headers: headers}).then((data)=>{window.location.href = 'https://facecaptcha.me/profile/'});
+                fetch('https://www.facecaptcha.me/mailverification/',{method: "POST", body: JSON.stringify({status:'OK'}), headers: headers}).then((data)=>{window.location.href = 'https://facecaptcha.me/profile/'});
               }
               else
               {
