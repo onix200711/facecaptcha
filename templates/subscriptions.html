@@ -63,7 +63,9 @@
             const basic = document.getElementById('basicPlan');
             const advanced = document.getElementById('advancedPlan');
             basic.addEventListener('click', function() {
-                location.href = window.location.protocol + '//' + window.location.hostname + "/gpay?plan=basic";
+                fetch("http://facecaptcha.me/subscriptions/", {
+                  method: "POST",
+                })
             })
             advanced.addEventListener('click', function() {
                 location.href = window.location.protocol + '//' + window.location.hostname + "/gpay?plan=advanced";
