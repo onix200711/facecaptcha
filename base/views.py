@@ -47,11 +47,6 @@ def sub(request):
 			],
 			mode = 'payment',
 			customer_creation = 'always',
-			custom_fields = [
-	                	{
-	                		'plan': plan,
-	                	},
-	            	],
 			success_url = 'http://facecaptcha.me/profile?session_id={CHECKOUT_SESSION_ID}',
 			cancel_url = 'http://facecaptcha.me/',
 		)
