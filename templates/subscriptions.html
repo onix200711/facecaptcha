@@ -65,10 +65,28 @@
             basic.addEventListener('click', function() {
                 fetch("http://facecaptcha.me/subscriptions/", {
                   method: "POST",
+                  body: JSON.stringify({'plan': 'basic'}),
                 })
+                .then((response) => {
+                  return response.json();
+                })
+                .then((data) => {
+                  console.log(data.link);
+                  location.href = data.link
+                });
             })
             advanced.addEventListener('click', function() {
-                location.href = window.location.protocol + '//' + window.location.hostname + "/gpay?plan=advanced";
+              fetch("http://facecaptcha.me/subscriptions/", {
+                  method: "POST",
+                  body: JSON.stringify({'plan': 'advanced'}),
+                })
+                .then((response) => {
+                  return response.json();
+                })
+                .then((data) => {
+                  console.log(data.link);
+                  location.href = data.link
+                });
             })
         </script>
 </body>
