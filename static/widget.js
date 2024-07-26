@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         track.stop();
                       });
                       console.log(Date.now());
-                fetch('https://facecaptcha.vercel.app/add/',{
+                fetch('https://www.facecaptcha.me/add/',{
                     method: "POST",
                     body: JSON.stringify({image:data.substring(22, data.length), apikey: apiKey}),
                     headers: headers,
