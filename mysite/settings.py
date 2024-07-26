@@ -125,6 +125,7 @@ import os
 STATIC_URL = 'static/'
 STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
 STATIC_ROOT = os.path.join(BASE_DIR , 'staticfiles_build', 'static')
+STRIPE_SECRET_KEY_TEST = 'sk_test_51PgjRJRu4mKtTRNvu3jYeXtoVToL2Mrx8xOepP6vSH1iFy7dtBs8RWUSYxzV04MEul8fATirgROI9aENHCiFgelY00in7Gjmsc'
 
 #Add this in your settings.py file:
 # Default primary key field type
