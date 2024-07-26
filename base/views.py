@@ -12,18 +12,75 @@ from base.models import APIkey, Transaction
 from django.apps import AppConfig
 from django.db.models.signals import pre_save
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
+import stripe
 import uuid
-
+import stripe
 import os
 import json
+import time
 @ensure_csrf_cookie
 def index(request):
     anon = request.user.is_anonymous
     return render(request, "index.html", {'anonymous':anon})
 
-
+@csrf_exempt
 def sub(request):
+    stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+    if request.method == "POST":
+        checkout_session = stripe.checkout.Session.create(
+			payment_method_types = ['card'],
+			line_items = [
+				{
+					'price': 'price_1PgjcnRu4mKtTRNvukRxKtSI',
+					'quantity': 1,
+				},
+			],
+			mode = 'payment',
+			customer_creation = 'always',
+			success_url = 'http://facecaptcha.me/payment_successful?session_id={CHECKOUT_SESSION_ID}',
+			cancel_url = 'http://facecaptcha.me/payment_canceled',
+		)
+        return redirect(checkout_session.url, code=303)
     return render(request, "subscriptions.html")
+
+
+## use Stripe dummy card: 4242 4242 4242 4242
+def payment_successful(request):
+	stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+	checkout_session_id = request.GET.get('session_id', None)
+	session = stripe.checkout.Session.retrieve(checkout_session_id)
+	customer = stripe.Customer.retrieve(session.customer)
+	user_id = request.user.user_id
+	return render(request, 'payment_successful.html', {'customer': customer})
+
+
+def payment_canceled(request):
+	stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+	return render(request, 'payment_canceled.html')
+
+
+@csrf_exempt
+def stripe_webhook(request):
+	stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+	time.sleep(10)
+	payload = request.body
+	signature_header = request.META['HTTP_STRIPE_SIGNATURE']
+	event = None
+	try:
+		event = stripe.Webhook.construct_event(
+			payload, signature_header, settings.STRIPE_WEBHOOK_SECRET_TEST
+		)
+	except ValueError as e:
+		return HttpResponse(status=400)
+	except stripe.error.SignatureVerificationError as e:
+		return HttpResponse(status=400)
+	if event['type'] == 'checkout.session.completed':
+		session = event['data']['object']
+		session_id = session.get('id', None)
+		time.sleep(15)
+	return HttpResponse(status=200)
 
 def gpay(request):
     try:
@@ -101,7 +158,7 @@ def mailverification(request):
         request.session['maysendcode'] = 0
         return render(request, 'verify.html', {'code':code})
     if request.method == 'POST':
-        userapi = APIkey(username = request.session['email'], apikey = (os.urandom(20).hex())[0:20], plan = 'starter')
+        userapi = APIkey(username = request.session['email'], apikey = os.urandom(32).hex(), plan = 'starter')
         userapi.save()
         user = User.objects.create_user(username = request.session['email'],password = request.session['password'])
         user.save()
